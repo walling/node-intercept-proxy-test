@@ -33,18 +33,18 @@ function hacker() {
     });
 }
 
-var destination = net.connect(26002, '188.40.72.79', function() {
-    console.log('CONNECTED TO SERVER!');
-});
-
 var server = net.createServer(function(source) {
     console.log('\nNEW CONNECTION: %j', source.address());
 
     var intercept1 = intercepter('SERVER');
     var intercept2 = intercepter('CLIENT');
 
-    destination.pipe(hacker()).pipe(intercept1).pipe(source);
-    source.pipe(intercept2).pipe(destination);
+    var destination = net.connect(26002, '188.40.72.79', function() {
+        console.log('\nCONNECTED TO SERVER!');
+
+        destination.pipe(hacker()).pipe(intercept1).pipe(source);
+        source.pipe(intercept2).pipe(destination);
+    });
 });
 
 server.listen(26002);

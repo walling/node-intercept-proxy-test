@@ -8,7 +8,7 @@ var server = net.createServer(function(source) {
     console.log('New connection: %j', source.address());
 
     var chunks = [];
-    var chunksSize = 0
+    var chunksSize = 0;
     var data, intercept, destination;
 
     // Create intercept stream, that stores and analyses the beginning of the data we receive
